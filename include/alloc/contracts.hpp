@@ -39,7 +39,7 @@
 // ═══════════════════════════════════════════════════════════════════════════
 
 #include <cstdlib>
-#include <print>
+#include <cstdio>
 #include <source_location>
 #include <string_view>
 
@@ -57,7 +57,7 @@ struct violation_info {
 // Prints to stderr and calls std::abort().
 // Replace with your own handler for custom behaviour (logging, exceptions).
 [[noreturn]] inline void default_handler(violation_info const& v) noexcept {
-    std::print(stderr,
+    printf(stderr,
         "\nContract violation ({}): '{}'\n"
         "  at {}:{} in {}\n",
         v.kind, v.condition,
