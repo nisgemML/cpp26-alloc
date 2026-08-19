@@ -6,23 +6,28 @@ on:
     branches: [ main ]
 jobs:
   build-and-test:
-    name: Build & Test (${{ matrix.std }})
-    runs-on: ubuntu-22.04
-    strategy:
-      matrix:
-        std: [c++20, c++23]
+    name: Build & Test
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
 
       - name: Install
-        run: sudo apt-get update -q && sudo apt-get install -y g++-12
-
-      - name: Compile tests
         run: |
-          g++-12 -std=${{ matrix.std }} -O2 -Wall -Wextra \
+          sudo apt-get update -q
+          sudo apt-get install -y g++-13
+
+      - name: Compile and test (C++20)
+        run: |
+          g++-13 -std=c++20 -O2 -Wall -Wextra \
             -I include \
             tests/*.cpp \
             -o test_runner
+          ./test_runner
 
-      - name: Run tests
-        run: ./test_runner
+      - name: Compile and test (C++23)
+        run: |
+          g++-13 -std=c++23 -O2 -Wall -Wextra \
+            -I include \
+            tests/*.cpp \
+            -o test_runner_23
+          ./test_runner_23
