@@ -6,19 +6,17 @@ on:
     branches: [ main ]
 jobs:
   build-and-test:
-    name: Build & Test (C++23)
+    name: Build & Test (C++23, GCC 14)
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-
-      - name: Install
+      - name: Install GCC 14
         run: |
           sudo apt-get update -q
-          sudo apt-get install -y g++-13
-
-      - name: Compile and test (C++23)
+          sudo apt-get install -y g++-14
+      - name: Compile and test
         run: |
-          g++-13 -std=c++23 -O2 -Wall -Wextra \
+          g++-14 -std=c++23 -O2 -Wall -Wextra \
             -I include \
             tests/*.cpp \
             -o test_runner
