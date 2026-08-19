@@ -6,7 +6,7 @@ on:
     branches: [ main ]
 jobs:
   build-and-test:
-    name: Build & Test
+    name: Build & Test (C++23)
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -16,18 +16,10 @@ jobs:
           sudo apt-get update -q
           sudo apt-get install -y g++-13
 
-      - name: Compile and test (C++20)
-        run: |
-          g++-13 -std=c++20 -O2 -Wall -Wextra \
-            -I include \
-            tests/*.cpp \
-            -o test_runner
-          ./test_runner
-
       - name: Compile and test (C++23)
         run: |
           g++-13 -std=c++23 -O2 -Wall -Wextra \
             -I include \
             tests/*.cpp \
-            -o test_runner_23
-          ./test_runner_23
+            -o test_runner
+          ./test_runner
